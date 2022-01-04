@@ -98,7 +98,8 @@ del dataframe['GarageQual']
 del dataframe['GarageArea']
 del dataframe['PavedDrive']
 del dataframe['3SsnPorch']
-
+del dataframe['BsmtFinSF1']
+del dataframe['YearRemodAdd']
 
 #plotar Gráficos dos atributos
 LotArea = dataframe['LotArea']
@@ -111,41 +112,15 @@ sns.scatterplot(x="PavedDrive", y="SalePrice", data=dataframe, hue="PavedDrive",
 
 
     
-    
-
-
-
-#Binarizar variaveis
-#MSZoning
-#Street
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-
 one_hot_enc = OneHotEncoder(cols=['MSZoning'])
 #treinoAtributosNews = dataframe['MSZoning']
 one_hot_enc.fit_transform(dataframe)
 
-#Codifica variavel ordinalmente
-#
-#
-#
-#
-#
-#
-#
-#
-encoder = ce.OrdinalEncoder(cols='GarageFinish', mapping=[{ "col":"GarageFinish", "mapping":{'Na':0, 'Unf':1, 'RFn':2, 'Fin':3}}])
-dataframenew = encoder.fit_transform(dataframe)
 
-#separar conjunto de treino e de teste | separar atributos do target
+encoderGarageFinish = ce.OrdinalEncoder(cols='GarageFinish', mapping=[{ "col":"GarageFinish", "mapping":{'Na':0, 'Unf':1, 'RFn':2, 'Fin':3}}])
+dataframe = encoderGarageFinish.fit_transform(dataframe)
+
+#separar conjunto de treino e de teste | separar atributos do target |valida;'ao cruzada
 x_treino, x_teste, y_treino, y_teste = train_test_split(dataframe.iloc[:, :-1], dataframe.iloc[:, -1:], test_size=0.3, random_state=10)
 
 
